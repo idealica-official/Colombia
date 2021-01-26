@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="CO">
+<input type="hidden" class="country_code" value="">
+  <head>
+
+<script src="js/jquery.min.js"></script>
+
+    <script>
+    function set_validator_errors(){
+        orderValidator.errorTitle = 'Por favor corrige los siguientes errores'; 
+
+        orderValidator.errorNameField = 'Listo'; 
+        orderValidator.errorNameMess = 'Introduzca su nombre'; 
+        
+        orderValidator.errorPhoneField = 'Nombre'; 
+        orderValidator.errorPhoneMess = 'Ingrese el número de teléfono correcto'; 
+        
+        orderValidator.errorAddress = 'Ingrese la dirección correcta'; 
+        orderValidator.errorRequired = 'campo requerido'; 
+        orderValidator.errorMaxLength = 'carácter máximo válido {1}'; 
+        orderValidator.errorMinLength = 'carácter mínimo válido {1}'; 
+        orderValidator.errorEmailField = 'E-mail';
+        orderValidator.errorEmail = 'Correo electrónico no válido especificado';
+        }
+    </script>
+    
+<script>
+
+
+
+    setOffer: function (offerId) {
+        if (offerId == this._setOfferId) {
+            return ;
+        }
+        this._setOfferId = offerId;
+        if (offerId) {
+            var offer = app.offers[offerId];
+            var previousOffer = app.currentOffer;
+            app.currentOffer = offer;
+            var event = this.jq.Event("offerchange");
+            event.previousOffer = previousOffer;
+            event.currentOffer = app.currentOffer;
+            this.jq(document).trigger(event);
+            this.updatePage(offer);
+        } else {
+            $('input[name=country]').val('');
+        }
+    },
+    
+    updatePage: function(offer) {
+        $('x-newprice').html(offer.price);
+        $('x-oldprice').html(offer.price2);
+        $('x-currency').html(offer.currency.name);
+        $('input[name=offer], select[name=offer]').val(offer.id);
+        $('input[name=country]').val(offer.country.code);
+    },
+
+    blockForm: function() {
+        // Блокируем кнопки при отправке формы
+        $('input[type=submit]', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        $('button', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        app.incompleteOrder.lock = true;
+        clearTimeout(app.incompleteOrder.timer);
+    },
+
+    unblockForm: function() {
+        $('input[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        $('button[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        app.incompleteOrder.lock = false;
+        clearTimeout(app.incompleteOrder.timer);
+    }
+
+};
+
+
+</script><script src="js/form.validate.js"></script>
+<script src="js/form.incomplete.js"></script>
+<script src="js/main2.js"></script>
+
+
+<base>
+    <meta charset="utf-8">
+    <title>Idealica</title>
+    <meta content="" name="author">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css"> <style>
+              .hide , .flag-dropdown {display: none;} /* обязательно */
+              .error-box{ /* CSS ошибки */
+                  color: #fff;
+                  background-color: #DE5042;
+                  border-radius: 5px;
+                  text-align: center;
+                  width: 100%;
+                  font-size: 13px;
+                  line-height: 20px;
+                  /*position: absolute;*/
+                  margin:0 auto !important;
+                  z-index: 100;
+              }
+          </style>
+  </head>
+  <body>
+    <div class="wr-all">
+      <div class="wr wr01">
+        <div class="wr wr0">
+          <div class="block">
+            <div class="img"><img src="images/es.png" alt=""></div>
+            <div class="text">Idealica</div>
+          </div>
+        </div>
+        <div class="wr wr1">
+          <div class="block">
+            <div class="img-girl"><img src="images/girl.png" alt=""></div>
+            <div class="right">
+              <div class="text">-17 KG EN SOLO 4 SEMANAS SIN<br>DIETAS Y EJERCICIOS</div>
+              <div class="img-product img-product__ch"><img src="images/product.png" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wr wr2">
+        <div class="block">
+          <div class="img-fruit"><img src="images/wr2-img1.png" alt=""></div>
+          <div class="item-body">
+            <div class="item1">
+              <div class="item-title">Si quiere:</div>
+              <ul class="list">
+                <li>¿Más ligereza?</li>
+                <li>¿Más atención?</li>
+                <li>¿Más cumplidos?</li>
+              </ul>
+            </div>
+            <div class="item2">
+              ¡Pida IDEALICA y adelgace 4 semanas!
+              ¡Este mes 50% de descuento!
+            </div>
+            <div class="item4"><span class="text1"><x-oldprice>219400</x-oldprice> <x-currency>COP</x-currency></span><span class="text2"><x-newprice>109700</x-newprice> <x-currency>COP</x-currency> (-50%)</span></div>
+            <div class="item3"><a class="btn-default" href="#form-block">COMPRAR IDEALICA</a></div>
+          </div>
+          <div class="img-flower"><img src="images/wr3-img1.png" alt=""></div>
+        </div>
+      </div>
+      <div class="wr wr3_0">
+        <div class="wr wr3">
+          <div class="block">
+            <div class="item-body">
+              <div class="item item1">
+                <div class="item-img"><img src="images/wr3-item1.png" alt=""></div>
+                <div class="item-text">Contiene fitoirisina natural</div>
+              </div>
+              <div class="item item2">
+                <div class="item-text">Efecto clínicamente testeado y aprobado</div>
+                <div class="item-img"><img src="images/wr3-item2.png" alt=""></div>
+              </div>
+              <div class="item item3">
+                <div class="item-img"><img src="images/wr3-item3.png" alt=""></div>
+                <div class="item-text">Sin reducción de pecho y flacidez de la piel</div>
+              </div>
+              <div class="item item4">
+                <div class="item-text">El producto está certificado en la UE</div>
+                <div class="item-img"><img src="images/wr3-item4.png" alt=""></div>
+              </div>
+            </div>
+            <div class="img-fruit"><img src="images/wr3-img2.png" alt=""></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wr wr5">
+        <div class="block">
+          <div class="title">¿Cómo puede cambiar su cuerpo con IDEALICA en 28 días?</div>
+          <div class="item-body">
+            <div class="item item1">
+              <div class="item-img"><img src="images/wr5-item1.png" alt=""></div>
+              <div class="item-box">
+                <div class="item-title">1-7 días</div>
+                <div class="item-text">IDEALICA comienza a transformar los depósitos "malos" en el cuerpo (lípidos blancos) en lípidos marrones "buenos", reduce el volúmen y el peso del cuerpo.</div>
+              </div>
+            </div>
+            <div class="item item2">
+              <div class="item-box">
+                <div class="item-title">8-19 días</div>
+                <div class="item-text">Una pérdida de peso de hasta 6-8 kg. Empieza a formarse una hermosa silueta del cuerpo.</div>
+              </div>
+              <div class="item-img"><img src="images/wr5-item2.png" alt=""></div>
+            </div>
+            <div class="item item3">
+              <div class="item-img"><img src="images/wr5-item3.png" alt=""></div>
+              <div class="item-box">
+                <div class="item-title">20-28 días</div>
+                <div class="item-text">El cuerpo se limpia y se rejuvenece. Una pérdida de peso hasta 12-14 kg. Consolidación de los logros.</div>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group"><a class="btn-default" href="#form-block">¡Obtenga un cuerpo ideal!</a></div>
+          <div class="bottom-text">Le garantizamos el 100% de confidencialidad de sus datos personales</div>
+          <div class="img-apel"><img src="images/wr7-img1.png" alt=""></div>
+        </div>
+      </div>
+      <div class="wr wr6">
+        <div class="block">
+          <div class="title">¿Por qué IDEALICA es tan efectiva?</div>
+          <div class="item-body">
+            <div class="item item1">
+              <div class="item-img"><img src="images/wr7-item1.png" alt=""></div>
+              <div class="item-title">Phytoirisine ( un extracto de la planta Rambutan)</div>
+              <div class="item-text">Transforma los lípidos blancos "dañinos" a los marrones "útiles", que se eliminan fácilmente del cuerpo</div>
+            </div>
+            <div class="item item2">
+              <div class="item-img"><img src="images/wr7-item2.png" alt=""></div>
+              <div class="item-title">Extractos de Kiwano (cucumis metuliferus) y Cherimoya</div>
+              <div class="item-text">Drenaje y desintoxicación del cuerpo</div>
+            </div>
+            <div class="item item3">
+              <div class="item-img"><img src="images/wr7-item3.png" alt=""></div>
+              <div class="item-title">Extractos de café verde tibetano, té verde "Shambhala", naranja agria</div>
+              <div class="item-text">Aumenta el metabolismo en 8 veces, tiene un efecto antioxidante más fuerte</div>
+            </div>
+            <div class="item item4">
+              <div class="item-img"><img src="images/wr7-item4.png" alt=""></div>
+              <div class="item-title">L-carnitina,<br>picolinato de cromo</div>
+              <div class="item-text">Fortalecen el potencial energético del cuerpo, reducen el apetito</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wr wr7">
+        <div class="block">
+          <div class="title">¡Alcanzar una figura ideal es fácil!</div>
+          <ul class="list">
+            <li class="li1">Disolver en un vaso de agua o zumo 25 gotas</li>
+            <li class="li2">Tomarlo 2 veces al día antes de las comidas</li>
+            <li class="li3">Curso recomendado: no menos de 28 días</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wr wr8">
+        <div class="block">
+          <div class="title">Opiniones de las personas que se han hecho un cuerpo ideal con IDEALICA</div>
+          <div class="flower"><img src="images/flower.png" alt=""></div>
+          <div class="flower2"><img src="images/flower.png" alt=""></div>
+          <div class="item-body">
+            <div class="item1">
+              <div class="img-min"><img src="images/wr9-item1.png" alt=""></div>
+              <div class="item-name">Carlota Martín, 32 años,<br>tenía 81 kg, ahora tengo 72 kg</div>
+            </div>
+            <div class="item2">Siempre tomo sólo los remedios y suplementos naturales, no confío en productos “químicos”. En un foro de personas como yo, amantes de todo lo natural, he encontrado una conversación sobre Idealica y me ha parecido muy interesante este desarrollo científico. Después de cumplir los 30 años abandoné el deporte y subí mucho peso, pero con Idealica inesperadamente he recuperado mi forma atlética muy rápido, que era lo principal y el mejor regalo para mi cumpleaños de 32 años. Mi esposo me dijo que ahora no aparento 32 sino 25. ¡Esta es mi victoria!</div>
+            <div class="item3"><img src="images/wr9-item1-1.jpg" alt=""></div>
+          </div>
+          <div class="item-body">
+            <div class="item1">
+              <div class="img-min"><img src="images/wr9-item2.png" alt=""></div>
+              <div class="item-name">Javier, 44 años,<br>antes tenía 94 kg, ahora tengo 80 kg</div>
+            </div>
+            <div class="item2">Para ser honesto, no pensé que esto funcionara. Es que en general, no creía mucho en los remedios naturales, pero la justificación científica me convenció y decidí a probarlo. -14 kg - NUNCA había pasado algo parecido conmigo. Este es un remedio increible. Se lo recomiendo a todos.</div>
+            <div class="item3"><img src="images/wr9-item2-1.jpg" alt=""></div>
+          </div>
+          <div class="item-body">
+            <div class="item1">
+              <div class="img-min"><img src="images/wr9-item3.png" alt=""></div>
+              <div class="item-name">Laura Gutierrez, 55 años,<br>antes 89 kg, después 77</div>
+            </div>
+            <div class="item2">Después de los 50 años empecé a notar que tenía sobrepeso, mi humor era fatal y la piel estaba arruinada. La menopausia es una prueba muy dura para las mujeres, que deprime por completo. Mi médico me recomendó una terapia hormonal basada en fitoestrógenos para la salud femenina y también me contó de la fitoirisina en Idealica, que es muy seguro y normaliza mi metabolismo alterado. Bueno, ¡no esperaba los resultados tan rápido! Esa fitoterapia me cambió totalmente y subió mi estado de ánimo. Ahora todo es diferente, me dio una ligereza como en la juventud.</div>
+            <div class="item3"><img src="images/wr9-item3-1.jpg" alt=""></div>
+          </div>
+          <div class="butterfly"><img src="images/wr5-img1.png" alt=""></div>
+        </div>
+      </div>
+      <div class="wr wr9">
+        <div class="block">
+          <div class="title">¡Atención! ¡Cuidado con las falsificaciones!</div>
+          <div class="img-box">
+            <div class="img-cert"><img src="images/cert.png" alt=""></div>
+            <div class="img-product"><img src="images/product3.png" alt=""></div>
+          </div>
+          <div class="text">
+            Con la creciente popularidad de IDEALICA, ha habido un aumento en los casos de productos falsificados que se ofrecen a precios bajos y de baja calidad.
+            El IDEALICA original y certificado está disponible sólo en nuestra página web. ¡No ahorre en su salud! Solicite IDEALICA, ya que el producto está certificado por un proveedor oficial en Colombia!
+          </div>
+        </div>
+      </div>
+      <div class="wr wr10">
+        <div class="block">
+          <div class="title">25 gotas, ¡Y todos notarán sus resultados!</div>
+          <div class="img-girl"><img src="images/girl2.png" alt=""></div>
+          <div class="item-body">
+            <div class="item-title">Con IDEALICA puede:</div>
+            <div class="item">Llevar ropa de 2-3 tallas menos</div>
+            <div class="item"> Recibir más atención y cumplidos</div>
+            <div class="item">¡Hacer algo con lo que soñaba antes!</div>
+          </div>
+        </div>
+      </div>
+             <div class="fluid">
+          <div class="standart-block">
+  <div class="standart-block__text">
+    <span>
+      
+    Todos nuestros productos cumplen con los principales estándares de calidad europeos y se prueban exhaustivamente antes del envío. 
+      
+    </span>
+    <p>
+     Por razones de seguridad, todas las parcelas se desinfectan y solo después de eso se envían al destinatario.  Todas las manipulaciones con los productos se llevan a cabo en trajes especiales de protección.
+    </p>
+    <span>
+        Cumplimos con todos los requisitos de salud pública.
+    </span>
+  </div>
+  <div class="standart-block__stamp">
+    <img src="images/stamp.png" alt="">
+  </div>
+</div>
+      </div>
+      <div class="wr wr11">
+        <div class="block">
+          <div class="title">¡No sea tímido! ¡Encargue IDEALICA ahora y obtenga un 50% de descuento!</div>
+        </div>
+        <div class="block1">
+          <div class="block2">
+            <div class="subtitle">¡Este mes 50%<br>de descuento!</div>
+            <div class="img-sale"><img src="images/sale.png" alt=""></div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="price">
+            <div class="text1">Precio original:&nbsp;<span> <x-oldprice>219400</x-oldprice> <x-currency>COP</x-currency></span></div>
+            <div class="text2">Precio con descuento:&nbsp;<span> <x-newprice>109700</x-newprice> <x-currency>COP</x-currency></span></div>
+          </div>
+          <form class="form-block" id="form-block" action="https://healthbestblog.space/cpatl/api.php" method="post">
+                
+    <select name="offer" class="form-control country_chang" style="display: none;">
+        <option data-country-code="CO" selected="selected" value="21883">
+            Колумбия        </option>
+    </select>
+
+                <div class="btn-group">
+              <input class="form-control" type="text" name="name" placeholder="Su nombre">
+            </div>
+            <div class="btn-group">
+              <input class="form-control" type="tel" name="phone" placeholder="Su telefono">
+            </div>
+            <div class="btn-group">
+              <button class="btn-default" type="submit">COMPRE</button>
+            </div>
+                   <input type="hidden" name="stream_hid" value="ZxRcmQeJ">
+      <input type="hidden" name="offer_id" value="3074">
+
+      
+      <input type="hidden" name="country" value="CO"> 
+
+      <input type="hidden" name="sid1" value="alex">
+      <input type="hidden" name="sid2" value="alex2">
+      <input type="hidden" name="sid3" value="alex3">
+      <input type="hidden" name="redirect_url" value="https://amazinghealth.github.io/germitox-ita/success/index.html">
+          </form>
+          <div class="bottom-text">Pago del pedido solo al momento de la recepción del producto</div>
+        </div>
+      </div>
+      <div class="wr wr12">
+        <div class="block">
+          <p>OOO "OSTROV PRODAZH" OGRN: 1197746695530 VAT: 7708365555</p>
+<p>129090, Moscow, pereulok Zhivarev, house 8, stroenie 3, flat 16 email: ostrov.prodazh@mail.com Skype: ostrov.prodazh@mail.com</p> 
+
+
+    
+            <p class="conf-link doclinks">
+        <a class="nav-link" href="" onclick="window.open('/policy_en.php'); return false;">Privacy Policy</a>
+          |
+        <a class="nav-link" href="" onclick="window.open('/terms_en.php'); return false;">Terms & Conditions</a>
+      </p>
+      
+    
+        </div>
+      </div>
+    </div>
+     <style>
+      .fluid {
+        width: 100%;
+        z-index: 100;
+        margin: 0 auto;
+        position: relative;
+        background-color: #fff;
+        padding: 15px 0;
+      }
+      .standart-block {
+  display: flex;
+  width: 20rem;
+  border: 7px solid #FD2A2A;
+  border-radius: 10px;
+  padding: 10px 20px;
+  align-items: center;
+  margin: 0px auto;
+ font-size: 0.9375rem;
+}
+.standart-block__text {
+  width: 70%;
+}
+.standart-block__text span:first-child {
+  font-weight: 900;
+}
+
+.standart-block__text p {
+  margin: 10px 0;
+  color: #fd2a2a;
+}
+.standart-block__text span:last-child {
+  font-weight: 600;
+}
+.standart-block__stamp  {
+  width: 30%;
+}
+.standart-block__stamp img {
+  width: 100%;
+}
+    </style>
+    <script src="js/foundation.js"></script>
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+  <script>
+        $(document).ready(function(){
+            $("a[href*=#]").on("click", function(e){
+                var anchor = $(this);
+                $('html, body').stop().animate({
+                    scrollTop: $(anchor.attr('href')).offset().top
+                }, 777);
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
+
+
+
+
+  </body>
+
+</html>
